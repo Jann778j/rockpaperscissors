@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Rock, Paper, Scissors</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Rock, Paper, Scissors</h1>
+
+    <div id="gamefield">
+      <div id="player1" class="player"></div>
+      <div id="player2" class="player"></div>
+      <div id="texts">
+        <div id="lose" class="hidden"><h1>You lose</h1></div>
+        <div id="win" class="hidden"><h1>You win</h1></div>
+        <div id="draw" class="hidden"><h1>It's a draw</h1></div>
+      </div>
+    </div>
+
+    <div id="buttons">
+      <button class="rock"></button>
+      <button class="paper"></button>
+      <button class="scissors"></button>
+    </div>
+    <script>
+      window.addEventListener("load", start);
+
+      playerValgt = "";
+      computerValgt = "";
+      function start() {
+        console.log("start");
+        getUserSelection();
+      }
+
+      function getUserSelection() {
+        console.log("userselttion her");
+        document
+          .querySelector(".scissors")
+          .addEventListener("click", scissorValgt);
+        document.querySelector(".rock").addEventListener("click", rockValgt);
+        document.querySelector(".paper").addEventListener("click", paperValgt);
+      }
+
+      function rockValgt() {
+        playerValgt = "rock";
+        makeRandom();
+      }
+
+      function paperValgt() {
+        playerValgt = "paper";
+        makeRandom();
+      }
+
+      function scissorValgt() {
+        playerValgt = "scissors";
+        makeRandom();
+      }
+
+      function makeRandom() {
+        console.log("virker det her??");
+
+        const computerOptions = ["rock", "paper", "scissors"];
+
+        myRandom = Math.floor(Math.random() * 3);
+        computerValgt = computerOptions[myRandom];
+
+        showAnimations();
+      }
+
+      function showAnimations() {
+        document.querySelector("#player1").classList.add("shake");
+        document
+          .querySelector("#player1")
+          .addEventListener("animationend", rockValgt);
+        document.querySelector("#player2").classList.add("shake");
+        document
+          .querySelector("#player2")
+          .addEventListener("animationend", rockValgt);
+
+        document
+          .querySelector(".scissors")
+          .removeEventListener("click", showAnimations);
+        document
+          .querySelector(".rock")
+          .removeEventListener("click", showAnimations);
+        document
+          .querySelector(".paper")
+          .removeEventListener("click", showAnimations);
+
+        determineWinner();
+      }
+
+      //her vælges det hvem der vinder spillet alt efter hvilke beslutninger der bliver tager - dette besluttes via if sætninger
+      function determineWinner() {
+        console.log("kan du se det her??");
+
+        if (playerValgt === computerValgt) {
+          visDraw();
+        }
+
+        if (playerValgt === "paper") {
+          if (computerValgt === "rock") {
+            visWinner();
+          }
+          document.querySelector("#player1").classList.add("playerpaper");
+        }
+
+        if (playerValgt === "rock") {
+          if (computerValgt === "scissors") {
+            visWinner();
+          }
+        }
+
+        if (playerValgt === "rock") {
+          if (computerValgt === "paper") {
+            vislooser();
+          }
+        }
+
+        if (playerValgt === "scissors") {
+          if (computerValgt === "paper") {
+            visWinner();
+          }
+        }
+
+        if (playerValgt === "scissors") {
+          if (computerValgt === "rock") {
+            vislooser();
+          }
+        }
+
+        if (playerValgt === "paper") {
+          if (computerValgt === "scissors") {
+            vislooser();
+          }
+        }
+      }
+
+      function visWinner() {
+        console.log("denne popper op hvis man vinder");
+        document.querySelector("#win").classlist.remove("hidden");
+      }
+
+      function vislooser() {
+        console.log("her ses taberen buhuu");
+        document.querySelector("#lose").classList.remove("hidden");
+      }
+
+      function visDraw() {
+        console.log("her ses resultetet hvis det er lige");
+        document.querySelector("#draw").classList.remove("hidden");
+      }
+    </script>
+  </body>
+</html>
